@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.diaraujo.workshopmongo.domain.User;
 import com.diaraujo.workshopmongo.repository.UserRepository;
+import com.diaraujo.workshopmongo.services.exception.ObjectNotFoundException;
 
 @Service
 public class UserService {
@@ -18,4 +19,11 @@ public class UserService {
 		return repository.findAll();
 	}
 	
+	public User findById(String id) {
+		User user = repository.findById(id).orElse(null);
+		if (user == null) {
+			throw new ObjectNotFoundException("Objeto não encontrado");
+		}
+		return user;
+	}
 }
